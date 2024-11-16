@@ -1,3 +1,9 @@
+//
+//  RequestHeaders.swift
+//  NyTimesApp
+//
+//  Created by Naveed Tahir on 16/11/2024.
+//
 
 struct RequestHeaders {
     
@@ -7,15 +13,6 @@ struct RequestHeaders {
         // Add your default headers here
         let headers: [String:String] = [
             "Content-Type": "application/json"
-        ]
-        return headers
-    }
-    
-    static func requestHeadersForMovieDetails () -> [String: String] {
-        // Add your default headers here
-        let headers: [String:String] = [
-            "Content-Type": "application/json",
-            "append_to_response": "videos,credits"
         ]
         return headers
     }

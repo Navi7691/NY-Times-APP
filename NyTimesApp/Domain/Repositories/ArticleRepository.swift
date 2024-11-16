@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol ArticleRepository {
+    func popularArticleList(completion: @escaping ((Result<ArticleListResponse>) -> ()))
+}

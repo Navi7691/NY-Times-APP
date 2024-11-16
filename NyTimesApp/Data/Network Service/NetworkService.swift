@@ -1,3 +1,9 @@
+//
+//  NetworkService.swift
+//  NyTimesApp
+//
+//  Created by Naveed Tahir on 16/11/2024.
+//
 
 import Foundation
 import UIKit
@@ -19,10 +25,10 @@ class LiveNetworkService : NetworkService{
 
     /// Used to switch between live and Mock Data
     /// in object-oriented programming, mock objects are simulated objects that mimic the behavior of real objects in controlled ways, most often as part of a software testing initiative.
-    var networkClient: MMNetworkClient
+    var networkClient: NYTimesNetworkClient
 
     //MARK: - INEJCTION OF URLSESSION OBJECT
-    init(networkClient: MMNetworkClient = URLSession.shared) {
+    init(networkClient: NYTimesNetworkClient = URLSession.shared) {
         self.networkClient = networkClient
     }
 
@@ -89,52 +95,94 @@ class MockNetworkService : NetworkService{
     public func sendRequest<T: Codable>(url:URL,headerValue: [String:String] ,for: T.Type = T.self, completion: @escaping (Result<T>) -> Void) {
         let mockError = NSError(domain: "com.example.error", code: -1, userInfo: [NSLocalizedDescriptionKey: "Mock network error"])
         
-        if url.absoluteString == "https://api.themoviedb.org/3//movie/popular?api_key=879dcd1fe99c208bd28b4dc495c1a7f4" {
+        if url.absoluteString == "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=\(Constants.articleKey)" {
             if shouldReturnError{
                 completion(.failure(mockError))
                 return
             }
             let jsonString = """
                  {
-                   "page": 1,
+                   "status": "OK",
+                   "copyright": "Copyright (c) 2024 The New York Times Company.  All Rights Reserved.",
+                   "num_results": 20,
                    "results": [
                      {
-                       "adult": false,
-                       "backdrop_path": "/path_to_backdrop_image.jpg",
-                       "genre_ids": [12, 18],
-                       "id": 12345,
-                       "original_language": "en",
-                       "original_title": "Sample Movie Title",
-                       "overview": "This is a short overview of the movie.",
-                       "popularity": 234.56,
-                       "poster_path": "/path_to_poster_image.jpg",
-                       "release_date": "2024-09-21",
-                       "title": "Sample Movie Title",
-                       "video": false,
-                       "vote_average": 7.5,
-                       "vote_count": 1500
+                       "uri": "nyt://article/02241405-a46e-5af3-b08a-666b2b263aa7",
+                       "url": "https://www.nytimes.com/2024/11/12/opinion/trump-had-it-easy-the-first-time.html",
+                       "id": 100000009820924,
+                       "asset_id": 100000009820924,
+                       "source": "New York Times",
+                       "published_date": "2024-11-12",
+                       "updated": "2024-11-13 17:43:30",
+                       "section": "Opinion",
+                       "subsection": "",
+                       "nytdsection": "opinion",
+                       "adx_keywords": "United States International Relations;Israel-Gaza War (2023- );United States Politics and Government;Defense and Military Forces;Russian Invasion of Ukraine (2022);Nuclear Weapons;Protectionism (Trade);Arms Control and Limitation and Disarmament;Presidential Transition (US);Putin, Vladimir V;Netanyahu, Benjamin;Trump, Donald J;China;Iran;Israel;Russia;Ukraine",
+                       "column": null,
+                       "byline": "By Thomas L. Friedman",
+                       "type": "Article",
+                       "title": "Trump Had It Easy the First Time",
+                       "abstract": "A host of problems that will need more subtle and sophisticated uses of force and coercive diplomacy will confront the new president.",
+                       "des_facet": [
+                         "United States International Relations",
+                         "Israel-Gaza War (2023- )",
+                         "United States Politics and Government",
+                         "Defense and Military Forces",
+                         "Russian Invasion of Ukraine (2022)",
+                         "Nuclear Weapons",
+                         "Protectionism (Trade)",
+                         "Arms Control and Limitation and Disarmament",
+                         "Presidential Transition (US)"
+                       ],
+                       "org_facet": [
+                         
+                       ],
+                       "per_facet": [
+                         "Putin, Vladimir V",
+                         "Netanyahu, Benjamin",
+                         "Trump, Donald J"
+                       ],
+                       "geo_facet": [
+                         "China",
+                         "Iran",
+                         "Israel",
+                         "Russia",
+                         "Ukraine"
+                       ],
+                       "media": [
+                         {
+                           "type": "image",
+                           "subtype": "photo",
+                           "caption": "",
+                           "copyright": "Daniel Ribar for The New York Times",
+                           "approved_for_syndication": 1,
+                           "media-metadata": [
+                             {
+                               "url": "https://static01.nyt.com/images/2024/11/13/multimedia/12Friedman-czgw/12Friedman-czgw-thumbStandard.jpg",
+                               "format": "Standard Thumbnail",
+                               "height": 75,
+                               "width": 75
+                             },
+                             {
+                               "url": "https://static01.nyt.com/images/2024/11/13/multimedia/12Friedman-czgw/12Friedman-czgw-mediumThreeByTwo210.jpg",
+                               "format": "mediumThreeByTwo210",
+                               "height": 140,
+                               "width": 210
+                             },
+                             {
+                               "url": "https://static01.nyt.com/images/2024/11/13/multimedia/12Friedman-czgw/12Friedman-czgw-mediumThreeByTwo440.jpg",
+                               "format": "mediumThreeByTwo440",
+                               "height": 293,
+                               "width": 440
+                             }
+                           ]
+                         }
+                       ],
+                       "eta_id": 0
                      },
-                     {
-                       "adult": false,
-                       "backdrop_path": "/another_backdrop_image.jpg",
-                       "genre_ids": [16, 35],
-                       "id": 67890,
-                       "original_language": "fr",
-                       "original_title": "Un Autre Film",
-                       "overview": "Une description brève du film.",
-                       "popularity": 150.32,
-                       "poster_path": "/another_poster_image.jpg",
-                       "release_date": "2024-08-15",
-                       "title": "Un Autre Film",
-                       "video": false,
-                       "vote_average": 6.8,
-                       "vote_count": 850
-                     }
-                   ],
-                   "total_pages": 100,
-                   "total_results": 2000
+                     
+                   ]
                  }
-                 
                  """
             
             if let jsonData = jsonString.data(using: .utf8) {

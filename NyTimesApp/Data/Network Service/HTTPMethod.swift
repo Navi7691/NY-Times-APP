@@ -1,12 +1,15 @@
+//
+//  HTTPMethod.swift
+//  NyTimesApp
+//
+//  Created by Naveed Tahir on 16/11/2024.
+//
 
 import Foundation
 // MARK: - HTTP METHODS Enum
 enum HTTPMethod: String {
     case get = "GET"
-    case patch = "PATCH"
     case post = "POST"
-    case put = "PUT"
-    case delete = "DELETE"
 }
 
 

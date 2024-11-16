@@ -80,6 +80,13 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="articleDescription" destination="h8P-ep-gmZ" id="dkZ-4t-wq0"/>
+                <outlet property="articleImageView" destination="dKx-nD-rdh" id="CwA-LV-j4X"/>
+                <outlet property="aticleTitle" destination="QVZ-Ah-t4y" id="8JR-aZ-Fkw"/>
+                <outlet property="authorName" destination="Clm-2s-25q" id="mGo-Ng-ULu"/>
+                <outlet property="publishDate" destination="BcM-CC-MkS" id="NSn-f5-sZy"/>
+            </connections>
             <point key="canvasLocation" x="212.21374045801525" y="48.591549295774648"/>
         </tableViewCell>
     </objects>
